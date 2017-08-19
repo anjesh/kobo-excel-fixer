@@ -1,8 +1,8 @@
 require(dplyr)
 require(readxl)
 require(WriteXLS)
-
-# setwd("../blog")
+getwd()
+setwd("./blog")
 
 choices <- read_excel("data/questions.xls",sheet="choices")
 choices[,c("a6","a75")] <- list(NULL)
@@ -39,14 +39,30 @@ fixSheet = function(sheet) {
   return(sheet);
 }
 
-sheet_1 <- readSheetContentAsText(kobo.data.filename1, 1)
-sheet_1 <- fixSheet(sheet_1)
+# read and fix first file 
+sheet1.1 <- readSheetContentAsText(kobo.data.filename1, 1)
+sheet1.1 <- fixSheet(sheet1.1)
 
-sheet_2 <- readSheetContentAsText(kobo.data.filename1, 2)
-sheet_2 <- fixSheet(sheet_2)
+sheet1.2 <- readSheetContentAsText(kobo.data.filename1, 2)
+sheet1.2 <- fixSheet(sheet1.2)
 
-sheet_3 <- readSheetContentAsText(kobo.data.filename1, 3)
-sheet_3 <- fixSheet(sheet_3)
+sheet1.3 <- readSheetContentAsText(kobo.data.filename1, 3)
+sheet1.3 <- fixSheet(sheet1.3)
 
+# read and fix second file
+sheet2.1 <- readSheetContentAsText(kobo.data.filename2, 1)
+sheet2.1 <- fixSheet(sheet2.1)
 
-WriteXLS(x=c("sheet_1","sheet_2","sheet_3"), kobo.data.outfilename)
+sheet2.2 <- readSheetContentAsText(kobo.data.filename2, 2)
+sheet2.2 <- fixSheet(sheet2.2)
+
+sheet2.3 <- readSheetContentAsText(kobo.data.filename2, 3)
+sheet2.3 <- fixSheet(sheet2.3)
+
+# merge two sheets data from 2 files into one dataframe
+sheet1.1 <- rbind(sheet1.1,sheet2.1)
+sheet1.2 <- rbind(sheet1.2,sheet2.2)
+sheet1.3 <- rbind(sheet1.3,sheet2.3)
+
+# write to XLS
+WriteXLS(x=c("sheet1.1","sheet1.2","sheet1.3"), kobo.data.outfilename)
