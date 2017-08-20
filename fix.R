@@ -1,8 +1,6 @@
 require(dplyr)
 require(readxl)
 require(WriteXLS)
-getwd()
-setwd("./blog")
 
 choices <- read_excel("data/questions.xls",sheet="choices")
 choices[,c("a6","a75")] <- list(NULL)
